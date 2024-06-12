@@ -14,9 +14,9 @@ class PostController extends BaseController
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
     {
-        $posts = Post::all();
+        $posts = Post::all(); // Retrieve all posts
         return view('posts.index', compact('posts'));
     }
 

@@ -8,7 +8,7 @@
             <thead>
             <tr>
                 <th>Title</th>
-                <th>Body</th>
+                <th>Content</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -16,7 +16,7 @@
             @foreach($posts as $post)
                 <tr>
                     <td>{{ $post->title }}</td>
-                    <td>{{ $post->body }}</td>
+                    <td>{{ $post->content }}</td>
                     <td>
                         <a href="{{ route('posts.show', $post) }}" class="btn btn-info">View</a>
                         <a href="{{ route('posts.edit', $post) }}" class="btn btn-warning">Edit</a>

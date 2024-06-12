@@ -1,43 +1,33 @@
-<!-- resources/views/layouts/app.blade.php -->
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>{{ config('app.name', 'Laravel') }}</title>
+
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,600">
+
+    <!-- Styles -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body>
-<div class="container">
-    <header>
-        <!-- Navigation -->
-        <nav>
-            <a href="{{ url('/') }}">Home</a>
+<body class="antialiased">
+<div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+    @include('layouts.navigation')
 
-            @auth
-                <a href="{{ url('/dashboard') }}">Dashboard</a>
-                <!-- Add profile link if needed -->
-                <a href="{{ route('profile.edit') }}">Profile</a>
-
-                <!-- Logout -->
-                <form method="POST" action="{{ route('logout') }}" style="display: inline;">
-                    @csrf
-                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();">
-                        {{ __('Logout') }}
-                    </a>
-                </form>
-            @else
-                <a href="{{ route('login') }}">Login</a>
-
-                @if (Route::has('register'))
-                    <a href="{{ route('register') }}">Register</a>
-                @endif
-            @endauth
-        </nav>
-    </header>
+    <!-- Page Heading -->
+    @if (isset($header))
+        <header class="bg-white dark:bg-gray-800 shadow">
+            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                {{ $header }}
+            </div>
+        </header>
+    @endif
 
     <!-- Page Content -->
     <main>
-        @yield('content')
+        {{ $slot }}
     </main>
 </div>
 </body>
