@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Routing\Controller as BaseController;
 
 class PostController extends BaseController
@@ -27,16 +28,26 @@ class PostController extends BaseController
 
     public function store(Request $request)
     {
+        Log::info('Store method called');
+        Log::info('Request data:', $request->all());
+
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
         ]);
 
-        Post::create($validatedData);
+        Log::info('Validated data:', $validatedData);
+
+        try {
+            $post = Post::create($validatedData);
+            Log::info('Post created:', $post);
+        } catch (\Exception $e) {
+            Log::error('Error creating post:', ['error' => $e->getMessage()]);
+            return redirect()->back()->withErrors('Error creating post');
+        }
 
         return redirect()->route('posts.index')->with('success', 'Post created successfully.');
     }
-
 
     public function show(Post $post)
     {
@@ -50,19 +61,35 @@ class PostController extends BaseController
 
     public function update(Request $request, Post $post)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'title' => 'required|string|max:255',
-            'body' => 'required|string',
+            'content' => 'required|string',
         ]);
 
-        $post->update($request->all());
+        Log::info('Update method called');
+        Log::info('Request data:', $request->all());
+        Log::info('Validated data:', $validatedData);
+
+        try {
+            $post->update($validatedData);
+            Log::info('Post updated:', $post);
+        } catch (\Exception $e) {
+            Log::error('Error updating post:', ['error' => $e->getMessage()]);
+            return redirect()->back()->withErrors('Error updating post');
+        }
 
         return redirect()->route('posts.index')->with('success', 'Post updated successfully.');
     }
 
     public function destroy(Post $post)
     {
-        $post->delete();
+        try {
+            $post->delete();
+            Log::info('Post deleted:', $post);
+        } catch (\Exception $e) {
+            Log::error('Error deleting post:', ['error' => $e->getMessage()]);
+            return redirect()->back()->withErrors('Error deleting post');
+        }
 
         return redirect()->route('posts.index')->with('success', 'Post deleted successfully.');
     }
