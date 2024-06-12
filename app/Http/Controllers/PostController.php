@@ -28,28 +28,19 @@ class PostController extends BaseController
 
     public function store(Request $request)
     {
-        Log::info('Store method called');
-        Log::info('Request data:', $request->all());
-
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
         ]);
 
-        Log::info('Validated data:', [$validatedData]);
+        Log::info('Validated data:', $validatedData);
 
         try {
             $post = Post::create($validatedData);
-            Log::info('Post creation result:', [$post]);
+            Log::info('Post created:', $post->toArray());
         } catch (\Exception $e) {
             Log::error('Error creating post:', ['error' => $e->getMessage()]);
             return redirect()->back()->withErrors('Error creating post');
-        }
-
-        if ($post) {
-            Log::info('Post created successfully:', [$post->toArray()]);
-        } else {
-            Log::error('Post creation returned null');
         }
 
         return redirect()->route('posts.index')->with('success', 'Post created successfully.');
