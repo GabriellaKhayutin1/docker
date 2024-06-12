@@ -18,7 +18,6 @@
                     <td>{{ $post->title }}</td>
                     <td>{{ $post->content }}</td>
                     <td>
-                        <a href="{{ route('posts.show', $post) }}" class="btn btn-info">View</a>
                         <a href="{{ route('posts.edit', $post) }}" class="btn btn-warning">Edit</a>
                         <form action="{{ route('posts.destroy', $post) }}" method="POST" style="display:inline-block;">
                             @csrf
