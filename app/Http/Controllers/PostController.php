@@ -29,7 +29,7 @@ class PostController extends BaseController
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'body' => 'required|string',
+            'content' => 'required|string',
         ]);
 
         Post::create($request->all());
