@@ -25,17 +25,20 @@ class PostController extends BaseController
         return view('posts.create');
     }
 
-    public function store(Request $request)
+    // app/Http/Controllers/PostController.php
+
+    public function store(Request $request): \Illuminate\Http\RedirectResponse
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'title' => 'required|string|max:255',
-            'content' => 'required|string', // Ensure 'content' is validated
+            'content' => 'required|string',
         ]);
 
-        Post::create($request->only('title', 'content')); // Pass only 'title' and 'content'
+        Post::create($validatedData);
 
         return redirect()->route('posts.index')->with('success', 'Post created successfully.');
     }
+
 
     public function show(Post $post)
     {
