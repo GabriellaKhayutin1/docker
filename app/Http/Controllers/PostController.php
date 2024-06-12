@@ -1,13 +1,12 @@
 <?php
 
-// app/Http/Controllers/PostController.php
-
 namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller as BaseController;
 
-class PostController extends Controller
+class PostController extends BaseController
 {
     // Apply the auth middleware to all actions
     public function __construct()
