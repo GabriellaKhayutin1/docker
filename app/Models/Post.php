@@ -12,8 +12,5 @@ class Post extends Model
 
     protected $fillable = ['title', 'content'];
 
-    public static function create(array $only)
-    {
-    }
 }
 

@@ -26,6 +26,8 @@ class PostController extends BaseController
         return view('posts.create');
     }
 
+    use Illuminate\Support\Facades\Log;
+
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -37,7 +39,12 @@ class PostController extends BaseController
 
         try {
             $post = Post::create($validatedData);
-            Log::info('Post created:', $post->toArray());
+
+            if ($post) {
+                Log::info('Post created:', $post->toArray());
+            } else {
+                Log::warning('Post creation returned null.');
+            }
         } catch (\Exception $e) {
             Log::error('Error creating post:', ['error' => $e->getMessage()]);
             return redirect()->back()->withErrors('Error creating post');
@@ -45,6 +52,7 @@ class PostController extends BaseController
 
         return redirect()->route('posts.index')->with('success', 'Post created successfully.');
     }
+
 
     public function show(Post $post)
     {
