@@ -20,7 +20,7 @@ class PostController extends BaseController
         return view('posts.index', compact('posts'));
     }
 
-    public function create()
+    public function create(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
     {
         return view('posts.create');
     }
@@ -29,10 +29,10 @@ class PostController extends BaseController
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'content' => 'required|string',
+            'content' => 'required|string', // Ensure 'content' is validated
         ]);
 
-        Post::create($request->all());
+        Post::create($request->only('title', 'content')); // Pass only 'title' and 'content'
 
         return redirect()->route('posts.index')->with('success', 'Post created successfully.');
     }
