@@ -4,7 +4,8 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build",
-        "heroku-postbuild": "npm run build"
+        "postbuild": "cp public/build/.vite/manifest.json public/build/",
+        "heroku-postbuild": "npm run build && npm run postbuild"
     },
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.2",
