@@ -1,7 +1,9 @@
-@extends('layout')
+@extends('layouts.app')
 
 @section('content')
-    <h1>{{ $post->title }}</h1>
-    <p>{{ $post->content }}</p>
-    <a href="{{ route('posts.index') }}">Back to Posts</a>
+    <div class="container">
+        <h1>{{ $post->title }}</h1>
+        <p>{{ $post->body }}</p>
+        <a href="{{ route('posts.index') }}" class="btn btn-secondary">Back</a>
+    </div>
 @endsection
