@@ -2,7 +2,7 @@
 
 @section('content')
     <h1>Posts</h1>
-    <a href="{{ route('posts.create') }}">Create New Post</a>
+    <a href="{{ route('posts.create') }}">Create a New Post</a>
     <table>
         <thead>
         <tr>
