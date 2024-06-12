@@ -15,13 +15,13 @@ class PostController extends BaseController
         $this->middleware('auth');
     }
 
-    public function index(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
+    public function index()
     {
         $posts = Post::all(); // Retrieve all posts
         return view('posts.index', compact('posts'));
     }
 
-    public function create(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
+    public function create()
     {
         return view('posts.create');
     }
@@ -36,11 +36,11 @@ class PostController extends BaseController
             'content' => 'required|string',
         ]);
 
-        Log::info('Validated data:', $validatedData);
+        Log::info('Validated data:', [$validatedData]);
 
         try {
             $post = Post::create($validatedData);
-            Log::info('Post created:', $post);
+            Log::info('Post created:', [$post->toArray()]);
         } catch (\Exception $e) {
             Log::error('Error creating post:', ['error' => $e->getMessage()]);
             return redirect()->back()->withErrors('Error creating post');
@@ -68,11 +68,11 @@ class PostController extends BaseController
 
         Log::info('Update method called');
         Log::info('Request data:', $request->all());
-        Log::info('Validated data:', $validatedData);
+        Log::info('Validated data:', [$validatedData]);
 
         try {
             $post->update($validatedData);
-            Log::info('Post updated:', $post);
+            Log::info('Post updated:', [$post->toArray()]);
         } catch (\Exception $e) {
             Log::error('Error updating post:', ['error' => $e->getMessage()]);
             return redirect()->back()->withErrors('Error updating post');
@@ -85,7 +85,7 @@ class PostController extends BaseController
     {
         try {
             $post->delete();
-            Log::info('Post deleted:', $post);
+            Log::info('Post deleted:', [$post->toArray()]);
         } catch (\Exception $e) {
             Log::error('Error deleting post:', ['error' => $e->getMessage()]);
             return redirect()->back()->withErrors('Error deleting post');
