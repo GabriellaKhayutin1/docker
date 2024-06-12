@@ -11,5 +11,9 @@ class Post extends Model
     use HasFactory;
 
     protected $fillable = ['title', 'body'];
+
+    public static function create(array $only)
+    {
+    }
 }
 
