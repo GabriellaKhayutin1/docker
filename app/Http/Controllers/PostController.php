@@ -40,10 +40,16 @@ class PostController extends BaseController
 
         try {
             $post = Post::create($validatedData);
-            Log::info('Post created:', [$post->toArray()]);
+            Log::info('Post creation result:', [$post]);
         } catch (\Exception $e) {
             Log::error('Error creating post:', ['error' => $e->getMessage()]);
             return redirect()->back()->withErrors('Error creating post');
+        }
+
+        if ($post) {
+            Log::info('Post created successfully:', [$post->toArray()]);
+        } else {
+            Log::error('Post creation returned null');
         }
 
         return redirect()->route('posts.index')->with('success', 'Post created successfully.');
